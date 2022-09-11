@@ -1,6 +1,8 @@
 package com.example.mvvmretrofitmovies;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +17,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<Result> resultArrayList;
+    private ArrayList<Result> resultArrayList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private MovieAdapter movieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getMovies();
+
     }
 
 
@@ -33,9 +38,16 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Movies> call, Response<Movies> response) {
                 if (response != null){
                     resultArrayList = (ArrayList<Result>) response.body().getResults();
-                    for (Result r : resultArrayList){
-                        Log.d("getOriginalTitle", r.getOriginalTitle());
-                    }
+
+                    movieAdapter = new MovieAdapter(resultArrayList, MainActivity.this);
+                    recyclerView = findViewById(R.id.recyclerview);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(movieAdapter);
+
+//                    for (Result r : resultArrayList){
+//                        Log.d("getOriginalTitle", r.getOriginalTitle());
+//                    }
                 }
             }
 
