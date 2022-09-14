@@ -40,7 +40,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 .resize(500, 500).centerInside().into(holder.poster);
         holder.title.setText(result.getTitle());
         holder.popularity.setText(result.getPopularity().toString());
-
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.mvvmretrofitmovies;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
                     movieAdapter = new MovieAdapter(resultArrayList, MainActivity.this);
                     recyclerView = findViewById(R.id.recyclerview);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                    RecyclerView.LayoutManager gridLayoutManager= new GridLayoutManager(MainActivity.this, 2);
+                    recyclerView.setLayoutManager(gridLayoutManager);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(movieAdapter);
 
