@@ -1,6 +1,7 @@
 package com.example.mvvmretrofitmovies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 .resize(500, 500).centerInside().into(holder.poster);
         holder.title.setText(result.getTitle());
         holder.popularity.setText(result.getPopularity().toString());
+
     }
 
     @Override
@@ -47,7 +49,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return resultArrayList.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView poster;
         TextView title;
         TextView popularity;
@@ -58,7 +60,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             this.poster = itemView.findViewById(R.id.poster);
             this.title = itemView.findViewById(R.id.title);
             this.popularity = itemView.findViewById(R.id.popularity);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Result result = resultArrayList.get(getAdapterPosition());
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra(DetailActivity.POSTER, result.getBackdropPath());
+            intent.putExtra(DetailActivity.TITLE, result.getTitle());
+            intent.putExtra(DetailActivity.VOTE_COUNT, result.getVoteCount().toString());
+            intent.putExtra(DetailActivity.OVERVIEW, result.getOverview());
+            context.startActivity(intent);
         }
     }
+
 
 }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.mvvmretrofitmovies.model.Movies;
 import com.example.mvvmretrofitmovies.model.Result;
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setAdapter(movieAdapter);
 
+
+
+
 //                    for (Result r : resultArrayList){
 //                        Log.d("getOriginalTitle", r.getOriginalTitle());
 //                    }
@@ -59,6 +63,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }
