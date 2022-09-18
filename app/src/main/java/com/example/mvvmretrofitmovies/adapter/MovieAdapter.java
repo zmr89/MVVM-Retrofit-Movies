@@ -43,7 +43,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 //        Picasso.get().load(posterUrl)
 //                .resize(500, 500).centerInside().into(holder.poster);
         String posterUrl = "https://image.tmdb.org/t/p/w500/" + result.getPosterPath();
-        Glide.with(context).load(posterUrl).into(holder.poster);
+        Glide.with(context).load(posterUrl).placeholder(R.drawable.progress_circle).into(holder.poster);
         holder.title.setText(result.getTitle());
         holder.popularity.setText(result.getPopularity().toString());
 
