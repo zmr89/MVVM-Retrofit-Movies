@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
@@ -38,6 +39,9 @@ public class DetailActivity extends AppCompatActivity {
         String posterUrl = "https://image.tmdb.org/t/p/original/" + poster;
         Picasso.get().load(posterUrl)
                 .resize(800, 800).centerInside().into(posterDetail);
+//        Glide.with(this)
+//                .load(posterUrl)
+//                .into(posterDetail);
         titleDetail.setText(title);
         voteCountDetail.setText(vote);
         overviewDetail.setText(overview);

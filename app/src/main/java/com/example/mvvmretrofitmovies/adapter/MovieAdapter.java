@@ -1,4 +1,4 @@
-package com.example.mvvmretrofitmovies;
+package com.example.mvvmretrofitmovies.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.mvvmretrofitmovies.DetailActivity;
+import com.example.mvvmretrofitmovies.R;
 import com.example.mvvmretrofitmovies.model.Result;
 import com.squareup.picasso.Picasso;
 
@@ -36,9 +39,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Result result = resultArrayList.get(position);
-        String posterUrl = "https://image.tmdb.org/t/p/original/" + result.getBackdropPath();
-        Picasso.get().load(posterUrl)
-                .resize(500, 500).centerInside().into(holder.poster);
+//        String posterUrl = "https://image.tmdb.org/t/p/original/" + result.getBackdropPath();
+//        Picasso.get().load(posterUrl)
+//                .resize(500, 500).centerInside().into(holder.poster);
+        String posterUrl = "https://image.tmdb.org/t/p/w500/" + result.getPosterPath();
+        Glide.with(context).load(posterUrl).into(holder.poster);
         holder.title.setText(result.getTitle());
         holder.popularity.setText(result.getPopularity().toString());
 

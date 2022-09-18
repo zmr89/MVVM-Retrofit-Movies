@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MVVM Retrofit Movies</string>
+
+    <string name="api_key">c9d48bea066a39e1ccce61b2cd2da8cb</string>
 </resources>

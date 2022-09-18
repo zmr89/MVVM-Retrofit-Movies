@@ -1,14 +1,14 @@
 package com.example.mvvmretrofitmovies;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
+import com.example.mvvmretrofitmovies.adapter.MovieAdapter;
 import com.example.mvvmretrofitmovies.model.Movies;
 import com.example.mvvmretrofitmovies.model.Result;
 
@@ -35,25 +35,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void getMovies(){
         RetrofitInstance retrofitInstance = new RetrofitInstance();
-        retrofitInstance.getMovieService().getMovieCall().enqueue(new Callback<Movies>() {
+        retrofitInstance.getMovieService().getMovieCall(getString(R.string.api_key)).enqueue(new Callback<Movies>() {
             @Override
             public void onResponse(Call<Movies> call, Response<Movies> response) {
-                if (response != null){
-                    resultArrayList = (ArrayList<Result>) response.body().getResults();
+                if (response != null && response.body() != null){
+                    Movies movies= response.body();
+                    resultArrayList = (ArrayList<Result>) movies.getResults();
 
-                    movieAdapter = new MovieAdapter(resultArrayList, MainActivity.this);
-                    recyclerView = findViewById(R.id.recyclerview);
-                    RecyclerView.LayoutManager gridLayoutManager= new GridLayoutManager(MainActivity.this, 2);
-                    recyclerView.setLayoutManager(gridLayoutManager);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(movieAdapter);
-
-
-
-
-//                    for (Result r : resultArrayList){
-//                        Log.d("getOriginalTitle", r.getOriginalTitle());
-//                    }
+                    fillRecyclerView();
                 }
             }
 
@@ -62,5 +51,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void fillRecyclerView() {
+        movieAdapter = new MovieAdapter(resultArrayList, MainActivity.this);
+        recyclerView = findViewById(R.id.recyclerview);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            RecyclerView.LayoutManager gridLayoutManager= new GridLayoutManager(MainActivity.this, 2);
+            recyclerView.setLayoutManager(gridLayoutManager);
+        } else {
+            RecyclerView.LayoutManager gridLayoutManager= new GridLayoutManager(MainActivity.this, 4);
+            recyclerView.setLayoutManager(gridLayoutManager);
+        }
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(movieAdapter);
+        movieAdapter.notifyDataSetChanged();
     }
 }
