@@ -1,6 +1,9 @@
 package com.example.mvvmretrofitmovies.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +17,10 @@ import com.example.mvvmretrofitmovies.service.RetrofitInstance;
 import com.example.mvvmretrofitmovies.adapter.MovieAdapter;
 import com.example.mvvmretrofitmovies.model.Movies;
 import com.example.mvvmretrofitmovies.model.Result;
+import com.example.mvvmretrofitmovies.viewmodel.MainActivityViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,10 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private MovieAdapter movieAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    private MainActivityViewModel mainActivityViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mainActivityViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(MainActivityViewModel.class);
 
         getMovies();
 
@@ -51,25 +60,34 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void getMovies(){
-        RetrofitInstance retrofitInstance = new RetrofitInstance();
-        retrofitInstance.getMovieService().getMovieCall(getString(R.string.api_key)).enqueue(new Callback<Movies>() {
+        mainActivityViewModel.getListLiveDataResults().observe(this, new Observer<List<Result>>() {
             @Override
-            public void onResponse(Call<Movies> call, Response<Movies> response) {
-                if (response != null && response.body() != null){
-                    Movies movies= response.body();
-                    resultArrayList = (ArrayList<Result>) movies.getResults();
-
-                    fillRecyclerView();
-
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Movies> call, Throwable t) {
-
+            public void onChanged(List<Result> results) {
+                resultArrayList = (ArrayList<Result>) results;
+                fillRecyclerView();
             }
         });
+
+//        RetrofitInstance retrofitInstance = new RetrofitInstance();
+//        retrofitInstance.getMovieService().getMovieCall(getString(R.string.api_key)).enqueue(new Callback<Movies>() {
+//            @Override
+//            public void onResponse(Call<Movies> call, Response<Movies> response) {
+//
+//                if (response != null && response.body() != null){
+//                    Movies movies = response.body();
+//                    resultArrayList = (ArrayList<Result>) movies.getResults();
+//
+//                    fillRecyclerView();
+//
+//                    swipeRefreshLayout.setRefreshing(false);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Movies> call, Throwable t) {
+//
+//            }
+//        });
     }
 
     private void fillRecyclerView() {
@@ -87,5 +105,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(movieAdapter);
         movieAdapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
     }
 }
