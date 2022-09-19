@@ -1,4 +1,4 @@
-package com.example.mvvmretrofitmovies;
+package com.example.mvvmretrofitmovies.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -9,6 +9,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import com.example.mvvmretrofitmovies.R;
+import com.example.mvvmretrofitmovies.service.RetrofitInstance;
 import com.example.mvvmretrofitmovies.adapter.MovieAdapter;
 import com.example.mvvmretrofitmovies.model.Movies;
 import com.example.mvvmretrofitmovies.model.Result;

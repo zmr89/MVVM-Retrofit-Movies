@@ -12,10 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.mvvmretrofitmovies.DetailActivity;
+import com.example.mvvmretrofitmovies.view.DetailActivity;
 import com.example.mvvmretrofitmovies.R;
 import com.example.mvvmretrofitmovies.model.Result;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -54,7 +53,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return resultArrayList.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
         ImageView poster;
         TextView title;
         TextView popularity;
@@ -65,19 +64,30 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             this.poster = itemView.findViewById(R.id.poster);
             this.title = itemView.findViewById(R.id.title);
             this.popularity = itemView.findViewById(R.id.popularity);
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Result result = resultArrayList.get(position);
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        intent.putExtra(DetailActivity.MOVIE_DATA, result);
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
 
-        @Override
-        public void onClick(View view) {
-            Result result = resultArrayList.get(getAdapterPosition());
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra(DetailActivity.POSTER, result.getBackdropPath());
-            intent.putExtra(DetailActivity.TITLE, result.getTitle());
-            intent.putExtra(DetailActivity.VOTE_COUNT, result.getVoteCount().toString());
-            intent.putExtra(DetailActivity.OVERVIEW, result.getOverview());
-            context.startActivity(intent);
-        }
+//        @Override
+//        public void onClick(View view) {
+//            Result result = resultArrayList.get(getAdapterPosition());
+//            Intent intent = new Intent(context, DetailActivity.class);
+//            intent.putExtra(DetailActivity.POSTER, result.getBackdropPath());
+//            intent.putExtra(DetailActivity.TITLE, result.getTitle());
+//            intent.putExtra(DetailActivity.VOTE_COUNT, result.getVoteCount().toString());
+//            intent.putExtra(DetailActivity.OVERVIEW, result.getOverview());
+//            context.startActivity(intent);
+//        }
     }
 
 

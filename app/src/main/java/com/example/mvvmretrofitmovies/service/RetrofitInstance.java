@@ -1,4 +1,4 @@
-package com.example.mvvmretrofitmovies;
+package com.example.mvvmretrofitmovies.service;
 
 import com.example.mvvmretrofitmovies.service.MovieService;
 
