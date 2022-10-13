@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         mainActivityViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(MainActivityViewModel.class);
 
+//        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+
         getMovies();
 
         swipeRefresh();
@@ -104,7 +106,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(movieAdapter);
+
         movieAdapter.notifyDataSetChanged();
+
         swipeRefreshLayout.setRefreshing(false);
     }
 }

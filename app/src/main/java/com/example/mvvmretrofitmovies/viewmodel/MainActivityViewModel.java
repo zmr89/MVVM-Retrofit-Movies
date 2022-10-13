@@ -22,7 +22,9 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Result>> getListLiveDataResults() {
-        listLiveDataResults = movieRepository.getMutableLiveData();
+        if (listLiveDataResults == null){
+            listLiveDataResults = movieRepository.getMutableLiveData();
+        }
         return listLiveDataResults;
     }
 

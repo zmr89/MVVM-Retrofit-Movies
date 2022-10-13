@@ -64,6 +64,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             this.poster = itemView.findViewById(R.id.poster);
             this.title = itemView.findViewById(R.id.title);
             this.popularity = itemView.findViewById(R.id.popularity);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -78,16 +79,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             });
         }
 
-//        @Override
-//        public void onClick(View view) {
-//            Result result = resultArrayList.get(getAdapterPosition());
-//            Intent intent = new Intent(context, DetailActivity.class);
-//            intent.putExtra(DetailActivity.POSTER, result.getBackdropPath());
-//            intent.putExtra(DetailActivity.TITLE, result.getTitle());
-//            intent.putExtra(DetailActivity.VOTE_COUNT, result.getVoteCount().toString());
-//            intent.putExtra(DetailActivity.OVERVIEW, result.getOverview());
-//            context.startActivity(intent);
-//        }
     }
 
 
