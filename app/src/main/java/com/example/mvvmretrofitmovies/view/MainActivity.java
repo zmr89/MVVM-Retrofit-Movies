@@ -1,6 +1,7 @@
 package com.example.mvvmretrofitmovies.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,6 +14,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.example.mvvmretrofitmovies.R;
+import com.example.mvvmretrofitmovies.databinding.ActivityDetailBinding;
+import com.example.mvvmretrofitmovies.databinding.ActivityMainBinding;
 import com.example.mvvmretrofitmovies.service.RetrofitInstance;
 import com.example.mvvmretrofitmovies.adapter.MovieAdapter;
 import com.example.mvvmretrofitmovies.model.Movies;
@@ -34,10 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivityViewModel mainActivityViewModel;
 
+    private ActivityMainBinding activityMainBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         mainActivityViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(MainActivityViewModel.class);
 
@@ -50,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void swipeRefresh() {
-        swipeRefreshLayout = findViewById(R.id.swiperefresh);
+        swipeRefreshLayout = activityMainBinding.swiperefresh;
         swipeRefreshLayout.setColorSchemeResources(R.color.purple_500);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -94,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillRecyclerView() {
         movieAdapter = new MovieAdapter(resultArrayList, MainActivity.this);
-        recyclerView = findViewById(R.id.recyclerview);
+        recyclerView = activityMainBinding.recyclerview;
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             RecyclerView.LayoutManager gridLayoutManager= new GridLayoutManager(MainActivity.this, 2);

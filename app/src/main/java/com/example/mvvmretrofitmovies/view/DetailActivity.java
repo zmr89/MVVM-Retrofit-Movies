@@ -53,12 +53,16 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(MOVIE_DATA)) {
             result = intent.getParcelableExtra(MOVIE_DATA);
+
+            String posterUrl = "https://image.tmdb.org/t/p/original/" + result.getBackdropPath();
+            result.setPosterPath(posterUrl);
+
             activityDetailBinding.setResultBindingDetail(result);
         }
 
 
-        String posterUrl = "https://image.tmdb.org/t/p/original/" + result.getBackdropPath();
-        Picasso.get().load(posterUrl).resize(800, 800).centerInside().into(activityDetailBinding.posterDetail);
+
+//        Picasso.get().load(posterUrl).resize(800, 800).centerInside().into(activityDetailBinding.posterDetail);
 //            String posterUrl = "https://image.tmdb.org/t/p/original/" + result.getBackdropPath();
 //            Glide.with(this).load(posterUrl).placeholder(R.drawable.progress_circle).into(posterDetail);
     }

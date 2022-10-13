@@ -55,12 +55,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 //    }
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Result result = resultArrayList.get(position);
-        holder.movieItemBinding.setResultBinding(result);
+
 //        String posterUrl = "https://image.tmdb.org/t/p/original/" + result.getBackdropPath();
 //        Picasso.get().load(posterUrl)
 //                .resize(500, 500).centerInside().into(holder.poster);
         String posterUrl = "https://image.tmdb.org/t/p/w500/" + result.getPosterPath();
-        Glide.with(context).load(posterUrl).placeholder(R.drawable.progress_circle).into(holder.movieItemBinding.poster);
+        result.setPosterPath(posterUrl);
+
+        holder.movieItemBinding.setResultBinding(result);
+//        Glide.with(context).load(posterUrl).placeholder(R.drawable.progress_circle).into(holder.movieItemBinding.poster);
     }
 
     @Override
@@ -103,7 +106,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             this.movieItemBinding = movieItemBinding;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            movieItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
