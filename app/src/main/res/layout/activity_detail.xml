@@ -1,52 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.DetailActivity">
 
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="resultBindingDetail"
+            type="com.example.mvvmretrofitmovies.model.Result" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:context=".view.DetailActivity">
 
-        <ImageView
-            android:id="@+id/posterDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher"
-            android:padding="8dp"
-            android:layout_marginBottom="56dp"/>
-
-        <TextView
-            android:id="@+id/titleDetail"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/voteCountDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Vote count"
-            android:layout_marginBottom="4dp"/>
+            <ImageView
+                android:id="@+id/posterDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher"
+                android:padding="8dp"
+                android:layout_marginBottom="56dp"/>
 
-        <TextView
-            android:id="@+id/overviewDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Overview"
-            android:layout_marginBottom="4dp"/>
+            <TextView
+                android:id="@+id/titleDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{resultBindingDetail.title}"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/voteCountDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{resultBindingDetail.voteCount.toString()}"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/overviewDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{resultBindingDetail.overview}"
+                android:layout_marginBottom="4dp"/>
 
 
-    </LinearLayout>
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
