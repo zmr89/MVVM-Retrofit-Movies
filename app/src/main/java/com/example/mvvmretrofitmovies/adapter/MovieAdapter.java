@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -20,12 +21,13 @@ import com.example.mvvmretrofitmovies.model.Result;
 
 import java.util.ArrayList;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
-    private ArrayList<Result> resultArrayList;
+public class MovieAdapter extends PagedListAdapter<Result, MovieAdapter.MovieViewHolder> {
+//    private ArrayList<Result> resultArrayList;
     private Context context;
 
-    public MovieAdapter(ArrayList<Result> resultArrayList, Context context) {
-        this.resultArrayList = resultArrayList;
+    public MovieAdapter(Context context) {
+        super(Result.CALLBACK);
+//        this.resultArrayList = resultArrayList;
         this.context = context;
     }
 
@@ -54,7 +56,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 //        holder.popularity.setText(result.getPopularity().toString());
 //    }
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        Result result = resultArrayList.get(position);
+        Result result = getItem(position);
 
 //        String posterUrl = "https://image.tmdb.org/t/p/original/" + result.getBackdropPath();
 //        Picasso.get().load(posterUrl)
@@ -66,10 +68,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 //        Glide.with(context).load(posterUrl).placeholder(R.drawable.progress_circle).into(holder.movieItemBinding.poster);
     }
 
-    @Override
-    public int getItemCount() {
-        return resultArrayList.size();
-    }
+//    @Override
+//    public int getItemCount() {
+//        return resultArrayList.size();
+//    }
 
 //    public class MovieViewHolder extends RecyclerView.ViewHolder {
 //        ImageView poster;
@@ -111,7 +113,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        Result result = resultArrayList.get(position);
+                        Result result = getItem(position);
                         Intent intent = new Intent(context, DetailActivity.class);
                         intent.putExtra(DetailActivity.MOVIE_DATA, result);
                         context.startActivity(intent);
